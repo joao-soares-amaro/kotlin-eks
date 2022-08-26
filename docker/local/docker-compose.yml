@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  kotlin-eks:
+    container_name: kotlin-eks
+    build:
+      context: .
+      dockerfile: ../../Dockerfile
+    image: kotlin-eks
+    environment:
+      - DD_AGENT_HOST
+      - DD_TRACE_AGENT_PORT
+      - AWS_FIREHOSE_CLIENT_ID
+      - AWS_FIREHOSE_CLIENT_SECRET
+    ports:
+      - "8080:8080"
+      - "443:443"
+    networks:
+      - kotlin-eks-network
+
+networks:
+  kotlin-eks-network:
+    driver: bridge
+    ipam:
+      driver: default
